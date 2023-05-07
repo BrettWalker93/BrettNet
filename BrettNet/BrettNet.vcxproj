@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActivationFunction.cpp" />
+    <ClCompile Include="Activator.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="BrettNet.cpp" />
     <ClCompile Include="LossHandler.cpp" />
@@ -138,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivationFunction.h" />
+    <ClInclude Include="Activator.h" />
     <ClInclude Include="LossHandler.h" />
     <ClInclude Include="Optimizer.h" />
     <ClInclude Include="OptimizerHandler.h" />
