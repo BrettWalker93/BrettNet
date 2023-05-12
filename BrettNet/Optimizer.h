@@ -5,14 +5,20 @@
 
 
 class SGD {
+
+protected:
+
+
+
 public:
+
+    SGD(double);
+
     double learning_rate;
 
-    SGD(double learning_rate);
+    void operator()(std::vector<WeightMatrix>& weights, const std::vector<WeightMatrix>& gradients) const;
 
-    void operator()(WeightMatrix& weights, const WeightMatrix& gradients) const;
 
-    //TODO: implement gradient descent algorithm
 };
 
 #endif

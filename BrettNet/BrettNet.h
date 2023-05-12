@@ -33,7 +33,7 @@ protected:
 	void compile();
 
 	//todo:: modularize output options
-	double forward(std::vector<double>);
+	std::vector<std::vector<double>> forward(std::vector<double>);
 
 public:
 

@@ -136,6 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Optimizer.cpp" />
     <ClCompile Include="OptimizerHandler.cpp" />
+    <ClCompile Include="OptimizerVisitor.cpp" />
     <ClCompile Include="WeightMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="LossHandler.h" />
     <ClInclude Include="Optimizer.h" />
     <ClInclude Include="OptimizerHandler.h" />
+    <ClInclude Include="OptimizerVisitor.h" />
     <ClInclude Include="ReLU.h" />
     <ClInclude Include="Sigmoid.h" />
     <ClInclude Include="Layer.h" />

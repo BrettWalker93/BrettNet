@@ -24,11 +24,21 @@ public:
 
 	//methods
 	int size();
+	int nrows();
+	int ncols();
+
+	void addTo(WeightMatrix);
+
+	//operators
+	WeightMatrix operator/(double scalar) const;
+	WeightMatrix& operator/=(double scalar);
+	WeightMatrix operator*(double scalar) const;
 
 	//index access
 	double& operator()(int i, int j);
 
 	std::vector<double>& operator[](int i);
+
 };
 
 #endif

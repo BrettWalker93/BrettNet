@@ -67,16 +67,26 @@ void BrettNet::teach(std::vector<std::vector<double>> input, std::vector<double>
 	// loop over epochs and batches
 	for (int epoch = 0; epoch < num_epochs; epoch++) {
 		for (int batch_start = 0; batch_start < input.size(); batch_start += batch_size) {
+
 			// calculate gradients for batch
+			// calculate forward activations for each input
 
-			std::vector<std::vector<std::vector<double>>> batch_activations(batch_size, std::vector<std::vector<double>>(layers.size()));
-			std::vector<double> fwd(batch_size);
+			std::vector<std::vector<std::vector<double>>> activations = std::vector<std::vector<std::vector<double>>>();
 
-			for (int i = 0; i < batch_size; i++) {
-				fwd[i] = forward(input[batch_start + i]);
+			for (int i = batch_start; i - batch_start < batch_size; i++) {
+
+				activations.push_back(forward(input[i]));
+
 			}
 
-			std::vector<WeightMatrix> gradients = lossHandler(input, output, fwd, batch_start, batch_size);
+			// activation functions of each layer
+			std::vector<std::string> activation_funs(0);
+			for (Layer l : layers) {
+				activation_funs.push_back(l.get_activation_function());
+			}
+
+			// send to loss handler to calculate gradients
+			std::vector<WeightMatrix> gradients = lossHandler(input, activations, output, weights, batch_start, batch_size, activation_funs, activator);
 
 			// apply optimizer to update weights
 			optimizerHandler(weights, gradients);
@@ -84,11 +94,11 @@ void BrettNet::teach(std::vector<std::vector<double>> input, std::vector<double>
 	}
 }
 
-double BrettNet::forward(std::vector<double> input) {
+std::vector<std::vector<double>> BrettNet::forward(std::vector<double> input) {
 
 	//todo: optimize linear algebra operations
 
-	std::vector<double> into = input;
+	std::vector<std::vector<double>> activations = std::vector<std::vector<double>>();
 
 	int num_l = std::get<int>(params["len"]);
 
@@ -97,6 +107,7 @@ double BrettNet::forward(std::vector<double> input) {
 		int layer_units = layers[layer_iter].get_units();
 
 		std::vector<double> layer_activation(layer_units);
+		
 
 		//weights[layer_iter] is current weightmatrix
 
@@ -106,20 +117,19 @@ double BrettNet::forward(std::vector<double> input) {
 
 			double unit_activation = 0.0;
 
-			for (int inp = 0; inp < into.size(); inp++) {
+			for (int inp = 0; inp < input.size(); inp++) {
 
-				unit_activation += weights[layer_iter][cur_unit][inp] * into[inp];
+				unit_activation += weights[layer_iter][cur_unit][inp] * input[inp];
 
 			}
-
 			layer_activation[cur_unit] = activator.activate(layers[layer_iter].get_activation_function(), unit_activation);
 
 		}
-		
-		into = layer_activation;
 
+		activations.push_back(layer_activation);
+		
 	}
 
-	return into[0];
+	return activations;
 
 }
