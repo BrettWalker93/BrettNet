@@ -28,11 +28,11 @@ std::vector<WeightMatrix> LossHandler::operator()(
     for (int i = batch_start; i < batch_start + batch_size && i < X.size(); ++i) {
 
         // backpropagate
-        std::vector<WeightMatrix> cur_gradients = backpropagate(activations[i], Y[i], weights, activation_funs);
+        std::vector<WeightMatrix> cur_gradients = backpropagate(activations[i], Y[i], weights, activation_funs, activator);
 
         if (gradients.empty()) gradients = cur_gradients;
         else {
-            for (int j = 0; j < gradients.size(); j++) {
+            for (size_t j = 0; j < gradients.size(); j++) {
                 gradients[j].addTo(cur_gradients[j]);
             }
         }
